@@ -6,11 +6,36 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
+  <div *ngIf="currentTrack">
+    <h2>Now Playing: {{ currentTrack.name }}</h2>
+    <p>Status: {{ playbackState | titlecase }}</p>
+    <img
+      [src]="currentTrack.image || 'assets/placeholder.png'"
+      style="width: 300px; height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;"
+    />
+
+    <p>{{ currentTime }} / {{ totalTime }}</p>
+
+    <ion-range min="0" max="1" step="0.01" [(ngModel)]="volume" (ionChange)="onVolumeChange($event)">
+      <ion-label slot="start">Vol</ion-label>
+    </ion-range>
+
+    <div style="margin: 10px 0;">
+      <ion-button color="medium" (click)="pauseTrack()" expand="block">Pause</ion-button>
+      <ion-button color="primary" (click)="resumeTrack()" expand="block">Resume</ion-button>
+      <ion-button color="secondary" (click)="previousTrack()" expand="block">Previous</ion-button>
+      <ion-button color="success" (click)="nextTrack()" expand="block">Next</ion-button>
+    </div>
+  </div>
+
   <ion-button expand="block" (click)="pickFiles()">Select Tracks from Device</ion-button>
 
   <ion-list>
     <ion-list-header>Local Tracks</ion-list-header>
     <ion-item *ngFor="let track of selectedFiles" (click)="playTrack(track)">
+      <ion-thumbnail slot="start">
+        <img src="assets/placeholder.png" />
+      </ion-thumbnail>
       {{ track.name }}
     </ion-item>
   </ion-list>
@@ -19,15 +44,12 @@
 
   <ion-list>
     <ion-list-header>Deezer Results</ion-list-header>
-    <ion-item *ngFor="let track of deezerResults" (click)="playTrack(track)">
+    <ion-item *ngFor="let track of deezerResults" (click)="playTrack(track, true)">
+      <ion-thumbnail slot="start">
+        <img [src]="track.image" />
+      </ion-thumbnail>
       {{ track.name }}
     </ion-item>
   </ion-list>
-
-  <div *ngIf="currentTrack">
-    <h2>Now Playing: {{ currentTrack.name }}</h2>
-    <ion-progress-bar [value]="progress / 100"></ion-progress-bar>
-    <p>{{ currentTime }} / {{ totalTime }}</p>
-  </div>
 
 </ion-content>
