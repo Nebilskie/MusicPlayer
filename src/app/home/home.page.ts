@@ -61,7 +61,7 @@ export class HomePage {
   }
 
   searchDeezer(query: string) {
-    const apiUrl = `http://localhost:3000/deezer/search?q=${encodeURIComponent(query)}`;
+    const apiUrl = `https://deezer-proxy-server-k7xr.onrender.com/deezer/search?q=${encodeURIComponent(query)}`;
     this.http.get(apiUrl).subscribe((res: any) => {
       this.deezerResults = res.data.map((track: any) => ({
         name: `${track.title_short} - ${track.artist.name}`,
