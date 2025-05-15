@@ -1,20 +1,33 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Music Player</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <ion-button expand="block" (click)="pickFiles()">Select Tracks from Device</ion-button>
+
+  <ion-list>
+    <ion-list-header>Local Tracks</ion-list-header>
+    <ion-item *ngFor="let track of selectedFiles" (click)="playTrack(track)">
+      {{ track.name }}
+    </ion-item>
+  </ion-list>
+
+  <ion-input placeholder="Search Deezer..." (ionInput)="onDeezerInput($event)"></ion-input>
+
+  <ion-list>
+    <ion-list-header>Deezer Results</ion-list-header>
+    <ion-item *ngFor="let track of deezerResults" (click)="playTrack(track)">
+      {{ track.name }}
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="currentTrack">
+    <h2>Now Playing: {{ currentTrack.name }}</h2>
+    <ion-progress-bar [value]="progress / 100"></ion-progress-bar>
+    <p>{{ currentTime }} / {{ totalTime }}</p>
   </div>
+
 </ion-content>
