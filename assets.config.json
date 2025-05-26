@@ -1,0 +1,12 @@
+{
+  "icon": {
+    "source": "resources/icon.png",
+    "foreground": "#ffffff",
+    "background": "#1db954"
+  },
+  "splash": {
+    "source": "resources/splash.png",
+    "backgroundColor": "#1db954",
+    "padding": "10%"
+  }
+}

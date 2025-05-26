@@ -1,0 +1,124 @@
+ion-content {
+  --padding-top: 20px;
+  background: linear-gradient(to bottom right, #121212, #0d0d0d); // modern dark background
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+}
+
+ion-header, ion-toolbar {
+  background-color: #1db954;
+  color: #fff;
+  --min-height: 64px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+ion-title {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+}
+
+ion-list-header {
+  font-weight: bold;
+  color: #1db954;
+  font-size: 1.1rem;
+  padding-left: 12px;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+ion-item {
+  --background: #1e1e1e;
+  border-radius: 12px;
+  margin: 6px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+}
+
+ion-item:hover {
+  transform: scale(1.01);
+}
+
+ion-label h3 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+ion-button {
+  margin: 8px 0;
+  --border-radius: 9999px;
+  --box-shadow: none;
+  font-weight: 500;
+}
+
+ion-thumbnail img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #1db95444;
+}
+
+ion-input {
+  margin-top: 16px;
+  --background: #1e1e1e;
+  --color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #333;
+  font-size: 1rem;
+}
+
+/* NOW PLAYING SECTION */
+.now-playing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 16px;
+  background-color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.album-art {
+  width: 240px;
+  height: 240px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid #1db95488;
+}
+
+.track-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0;
+  color: #ffffff;
+}
+
+.status-text {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.control-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+ion-icon {
+  color: #1db954;
+}
+
+ion-range {
+  margin-top: 10px;
+  --bar-background: #444;
+  --bar-background-active: #1db954;
+  --knob-background: #1db954;
+}

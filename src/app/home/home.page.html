@@ -1,0 +1,125 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Music Player</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <!-- NOW PLAYING SECTION -->
+  <div *ngIf="currentTrack" class="now-playing">
+    <img [src]="currentTrack.image || 'assets/placeholder.png'" class="album-art" />
+    <h2 class="track-title">{{ currentTrack.name }}</h2>
+    <p class="status-text">{{ playbackState | titlecase }}</p>
+
+    <p>{{ currentTime }} / {{ totalTime }}</p>
+    <ion-progress-bar [value]="progress / 100" color="success"></ion-progress-bar>
+
+    <ion-range min="0" max="1" step="0.01" [(ngModel)]="volume" (ionChange)="onVolumeChange($event)">
+      <ion-icon name="volume-low-outline" slot="start"></ion-icon>
+      <ion-icon name="volume-high-outline" slot="end"></ion-icon>
+    </ion-range>
+
+    <div class="control-buttons">
+      <ion-button fill="clear" (click)="previousTrack()">
+        <ion-icon name="play-skip-back" size="large"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" *ngIf="playbackState === 'playing'" (click)="pauseTrack()">
+        <ion-icon name="pause-circle" size="large"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" *ngIf="playbackState !== 'playing'" (click)="resumeTrack()">
+        <ion-icon name="play-circle" size="large"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="nextTrack()">
+        <ion-icon name="play-skip-forward" size="large"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- FILE PICKER -->
+  <ion-button expand="block" (click)="pickFiles()">Select Tracks from Device</ion-button>
+
+  <!-- CREATE PLAYLIST -->
+  <ion-button expand="block" (click)="addNewPlaylistPrompt()">Create New Playlist</ion-button>
+
+  <!-- SELECT PLAYLIST -->
+  <ion-select placeholder="Choose Playlist" (ionChange)="playPlaylist($event.detail.value)">
+    <ion-select-option *ngFor="let pl of userPlaylists" [value]="pl.name">{{ pl.name }}</ion-select-option>
+  </ion-select>
+
+<ion-list *ngIf="currentPlaylist.length > 0">
+  <ion-list-header>🎵 Playlist: {{ currentPlaylistName }}</ion-list-header>
+  <ion-item *ngFor="let track of currentPlaylist">
+    <ion-thumbnail slot="start">
+      <img [src]="track.image || 'assets/placeholder.png'" />
+    </ion-thumbnail>
+
+    <!-- PLAY ON CLICK -->
+    <ion-label (click)="playTrack(track)">
+      {{ track.name }}
+    </ion-label>
+
+    <!-- FIXED DELETE BUTTON: stops event propagation -->
+    <ion-button
+      fill="clear"
+      color="danger"
+      (click)="removeTrackFromPlaylist(currentPlaylistName, track); $event.stopPropagation()"
+      slot="end">
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-list>
+
+
+<ion-list>
+  <ion-list-header>🛠 Playlist Controls</ion-list-header>
+  <ion-item *ngFor="let pl of userPlaylists">
+    <ion-label>{{ pl.name }}</ion-label>
+    <ion-button fill="clear" color="primary" (click)="addSongToPlaylist(pl.name, currentTrack)">
+      Add Current Track
+    </ion-button>
+    <ion-button fill="clear" color="danger" (click)="deletePlaylist(pl.name)">
+      Delete
+    </ion-button>
+  </ion-item>
+</ion-list>
+
+  <!-- LOCAL TRACKS -->
+  <ion-list>
+    <ion-list-header>Local Tracks</ion-list-header>
+    <ion-item *ngFor="let track of selectedFiles" (click)="playTrack(track)">
+      <ion-thumbnail slot="start">
+        <img src="assets/placeholder.png" />
+      </ion-thumbnail>
+      {{ track.name }}
+    </ion-item>
+  </ion-list>
+
+  <!-- TOP TRACKS -->
+  <ion-list>
+    <ion-list-header>🔥 Top Tracks</ion-list-header>
+    <ion-item *ngFor="let track of topTracks" (click)="playTrack(track, true)">
+      <ion-thumbnail slot="start">
+        <img [src]="track.image" />
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{ track.name }}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- SEARCH -->
+  <ion-input placeholder="Search Deezer..." (ionInput)="onDeezerInput($event)"></ion-input>
+
+  <!-- DEEZER RESULTS -->
+  <ion-list>
+    <ion-list-header>Deezer Results</ion-list-header>
+    <ion-item *ngFor="let track of deezerResults" (click)="playTrack(track, true)">
+      <ion-thumbnail slot="start">
+        <img [src]="track.image" />
+      </ion-thumbnail>
+      {{ track.name }}
+    </ion-item>
+  </ion-list>
+
+</ion-content>

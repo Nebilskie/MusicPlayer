@@ -1,0 +1,7 @@
+{
+  "name": "FinalsP",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
